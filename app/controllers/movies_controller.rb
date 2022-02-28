@@ -12,12 +12,12 @@ class MoviesController < ApplicationController
       ratingParams = params[:ratings]
       @all_ratings = ['G','PG','PG-13','R']
       if ratingParams != nil
-        filteredMovies, @chosenRatings = display_based_rating(ratingParams, Movie.all)
+        filteredMovies, @chosenRatings = ratingsort(ratingParams, Movie.all)
         session[:chosenRatings] = @chosenRatings
       else
         if session[:chosenRatings] != nil
           ratingParams = session[:chosenRatings]
-          filteredMovies, @chosenRatings = display_based_rating(ratingParams, Movie.all)
+          filteredMovies, @chosenRatings = ratingsort(ratingParams, Movie.all)
         else
           filteredMovies, @chosenRatings = Movie.all, @all_ratings
         end
@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
       @movies,@isClick = movies_sort(sortParams, filteredMovies)
   end
   
-  def display_based_rating(ratings,movies)
+  def ratingsort(ratings,movies)
     ratingArr = Array.new
       if ratings != nil
         ratings.each do |key, value|
