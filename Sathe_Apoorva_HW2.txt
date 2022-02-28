@@ -1,0 +1,3 @@
+Heroku Application : https://safe-refuge-59298.herokuapp.com/movies
+Github URL : https://github.com/Apooorva/rottenpotatoes-rails-intro
+
