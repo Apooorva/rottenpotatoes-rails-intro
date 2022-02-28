@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    sortParams = params[:sort]
+      sortParams = params[:sort]
       ratingParams = params[:ratings]
       @all_ratings = ['G','PG','PG-13','R']
       if ratingParams != nil
@@ -25,7 +25,7 @@ class MoviesController < ApplicationController
       if sortParams == nil
         sortParams = session[:sort]
       end
-      @movies,@isClick = sortFn(sortParams, filteredMovies)
+      @movies,@isClick = movies_sort(sortParams, filteredMovies)
   end
   
   def display_based_rating(ratings,movies)
@@ -41,7 +41,7 @@ class MoviesController < ApplicationController
       return movies.where(:rating=>ratingArr) , ratingArr
   end  
     
-  def sortFn(sort,movies)
+  def movies_sort(sort,movies)
      if sort == 'title'
       sortedMovies = movies.sort_by(&:title)
       session[:sort] = 'title'
