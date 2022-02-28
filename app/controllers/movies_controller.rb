@@ -9,6 +9,35 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
   end
+  
+  def display_based_rating(ratings,movies)
+    ratingArr = Array.new
+      if ratings != nil
+        ratings.each do |key, value|
+         ratingArr.append(key)
+       end
+      end
+      if ratingArr.length() == 0
+        return movies,ratingArr
+      end
+      return movies.where(:rating=>ratingArr) , ratingArr
+  end  
+    
+  def sortFn(sort,movies)
+     if sort == 'title'
+      sortedMovies = movies.sort_by(&:title)
+      session[:sort] = 'title'
+      isClick = 'title'
+     elsif sort == 'release'
+      sortedMovies = movies.sort_by(&:release_date)
+      session[:sort] = 'release'
+      isClick = 'release'
+     else
+      sortedMovies = movies
+      isClick = 'none'
+     end
+     return sortedMovies,isClick
+  end
 
   def new
     # default: render 'new' template
